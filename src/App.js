@@ -1,25 +1,32 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Card from "./components/Card"
 
 const App = () => {
-  const [advice, setAdvice] = usestate('')
+  const [dnd, setDnd] = useState('')
 
-  const getAdvice = () => {
-    const response = fetch('https://api.adviceslip.com/advice')
-    const data = response.json
-    setAdvice(data)
+
+  const getDnd = async () => {
+    const response = await fetch('https://www.dnd5eapi.co/api/classes/paladin/spells')
+    const data = await response.json()
+    setDnd(data)
   }
   useEffect(() => {
-    getAdvice()
-  })
+    getDnd()
+  }, [])
 
 
-  if(advice) return <h1>loading...</h1>
+  // come back to this
+  if(!dnd) return <h1>loading...</h1>
   return (
+    <div>
       <div>
-      <h1>advice app</h1>
+      <h1>Paladin app</h1>
       </div>
-      <Card advice={setAdvice} />
+      {dnd.results.map((spell, index) => {
+        return <Card spell={spell}/>
+      })}
+    </div>
   )
 }
 
+export default App

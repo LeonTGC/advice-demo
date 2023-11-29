@@ -1,5 +1,5 @@
 const Button = ({ func, text }) => {
-    retrun <button onclick={func}> text </button>
+    return <button onClick={func}>{ text }</button>
 }
 
 export default Button
